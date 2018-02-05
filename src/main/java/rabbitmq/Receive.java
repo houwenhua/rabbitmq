@@ -3,6 +3,9 @@ package rabbitmq;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -12,6 +15,7 @@ import com.rabbitmq.client.ShutdownSignalException;
 
 public class Receive {
 
+	//private static final Logger logger = LoggerFactory.getLogger(Receive.class);
 	public static void main(String[] args) throws IOException, TimeoutException, ShutdownSignalException, ConsumerCancelledException, InterruptedException {
 		//创建工厂
 		ConnectionFactory cf = new ConnectionFactory();
@@ -29,7 +33,7 @@ public class Receive {
 		//routingKey
 		String routingKey = "RountKey1";
 		//声明交换机，第一个参数是交换机名字，第二个是四种交换机的一种，第三是是否持久化，定义为是，就是服务器重启时，队列依旧存在。
-		channel.exchangeDeclare(exchangeName,"direct",true);
+		channel.exchangeDeclare(exchangeName,"direct",false);
 		//queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete,Map<String, Object> arguments)  
         //第一个参数是队列名，第二个是是否持久化，第三个表示是否只进行当前的tcp连接，第四个表示是否进行自动删除队列，第五个主要用于Headers Exchange进行消息匹配时
 		channel.queueDeclare(queueName, true, false, false, null);
